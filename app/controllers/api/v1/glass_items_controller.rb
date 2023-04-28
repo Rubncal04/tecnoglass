@@ -7,15 +7,17 @@ class Api::V1::GlassItemsController < ApplicationController
 
   def create
     @glass_item = GlassItem.new glass_item_params
+    @glass_item.save!
 
-    render json: @glass_item, status: :created if @glass_item.save!
+    render json: @glass_item, status: :created
 
   rescue StandardError => e
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity
   end
 
   def update
-    render json: @glass_item, status: :ok if @glass_item.update! glass_item_params
+    @glass_item.update! glass_item_params
+    render json: @glass_item, status: :ok
 
   rescue StandardError => e
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity

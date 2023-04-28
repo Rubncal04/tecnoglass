@@ -7,21 +7,22 @@ class Api::V1::CustomersController < ApplicationController
 
   def create
     @customer = Customer.new customer_params
-    render json: @customer, status: :created if @customer.save!
+    @customer.save!
+    render json: @customer, status: :created
 
   rescue StandardError => e
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity
   end
 
   def update
-    render json: @customer, status: :ok if @customer.update! customer_params
+    @customer.update! customer_params
+    render json: @customer, status: :ok
 
   rescue StandardError => e
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity
   end
 
   def destroy
-    @customer.orders.delete_all
     @customer.destroy
     head :no_content
   end

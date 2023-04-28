@@ -7,7 +7,8 @@ class Api::V1::OrdersController < ApplicationController
 
   def create
     @order = Order.new order_params
-    render json: @order, status: :created if @order.save!
+    @order.save!
+    render json: @order, status: :created
 
   rescue StandardError => e
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity
