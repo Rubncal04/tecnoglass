@@ -13,10 +13,6 @@ class Api::V1::CustomersController < ApplicationController
     render json: { message: 'Something went wrong', error: e.message }, status: :unprocessable_entity
   end
 
-  # def show
-  #   render json: @customer
-  # end
-
   def update
     render json: @customer, status: :ok if @customer.update! customer_params
 
@@ -25,6 +21,7 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def destroy
+    @customer.orders.delete_all
     @customer.destroy
     head :no_content
   end
