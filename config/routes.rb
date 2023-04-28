@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         post :approve, on: :member
         post :reject, on: :member
       end
+      resources :glass_items
     end
   end
 end
